@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Owais | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -18,21 +19,21 @@
     body {
       background: #1C1C1C;
       color: #F4F4F4;
+      line-height: 1.6;
     }
     nav {
       background-color: #000;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       padding: 15px 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    nav div {
+    .nav-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      justify-content: flex-end;
     }
     nav a {
       color: #F4F4F4;
@@ -40,17 +41,23 @@
       margin-left: 15px;
       font-weight: bold;
       transition: color 0.3s ease;
-      white-space: nowrap;
+      font-size: 14px;
     }
     nav a:hover {
       color: #BFA181;
+    }
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      color: #F4F4F4;
+      font-size: 1.5rem;
     }
     header#hero {
       background-color: #1C1C1C;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 60px 20px;
+      padding: 40px 20px;
     }
     .hero-container {
       display: flex;
@@ -62,22 +69,96 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.4);
       max-width: 1000px;
       width: 100%;
-      text-align: center;
+    }
+    .hero-image-container {
+      position: relative;
+      margin-bottom: 20px;
     }
     .hero-container img {
-      width: 160px;
-      height: auto;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      margin-bottom: 20px;
       border: 2px solid #BFA181;
+      object-fit: cover;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .hero-container img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(191, 161, 129, 0.7);
+    }
+    .img-label {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -15px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #F4F4F4;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+    .hero-image-container:hover .img-label {
+      opacity: 1;
+    }
+    .hero-text {
+      text-align: center;
     }
     .hero-text h1 {
       color: #BFA181;
       font-size: 1.8rem;
       margin-bottom: 10px;
+      display: inline-block;
+      transition: transform 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+    }
+    .hero-text h1:hover {
+      transform: scale(1.05);
+      color: #F4F4F4;
     }
     .hero-text p {
       font-size: 1rem;
+      margin-bottom: 15px;
+    }
+    .wave-emoji {
+      display: inline-block;
+      animation: wave 1.5s infinite;
+      transform-origin: 70% 70%;
+    }
+    @keyframes wave {
+      0% { transform: rotate(0deg); }
+      15% { transform: rotate(14deg); }
+      30% { transform: rotate(-8deg); }
+      45% { transform: rotate(14deg); }
+      60% { transform: rotate(-4deg); }
+      75% { transform: rotate(10deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .hero-links {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .hero-links a {
+      color: #BFA181;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .hero-links a:hover {
+      transform: scale(1.05);
+      color: #F4F4F4;
+    }
+    .hero-links img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
     }
     .cta {
       display: inline-block;
@@ -86,75 +167,241 @@
       color: #1C1C1C;
       text-decoration: none;
       border-radius: 5px;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
     .cta:hover {
       background: #D4C5B0;
+      transform: scale(1.05);
     }
     section {
       padding: 30px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     h2 {
       color: #BFA181;
       margin-bottom: 20px;
+      font-size: 1.8rem;
       text-align: center;
+    }
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
     }
     ul {
       list-style: disc;
       margin-left: 20px;
+      padding-left: 15px;
     }
-    .project, .experience-item {
+    li {
+      margin-bottom: 8px;
+    }
+    .card {
       margin-bottom: 20px;
-      padding: 15px;
+      padding: 20px;
       background: #2A2A2A;
       border-left: 5px solid #BFA181;
       border-radius: 8px;
-    }
-    .projects-grid, .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .skill-card, .project-card {
-      background-color: #2A2A2A;
-      padding: 15px;
-      border-radius: 10px;
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
+    }
+    .about-card p {
+      margin-bottom: 15px;
+    }
+    .education-card h3 {
+      color: #BFA181;
+    }
+    .education-card p {
+      margin-bottom: 5px;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .skill-card {
+      padding: 15px;
       text-align: center;
+      background-color: #2A2A2A;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .skill-card:hover {
+      transform: scale(1.05);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .project-card {
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #2A2A2A;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    .project-card h3 {
+      color: #BFA181;
+      margin-bottom: 10px;
+    }
+    .project-card p {
+      margin-bottom: 15px;
+    }
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .project-links a {
+      color: #BFA181;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .project-links a:hover {
+      color: #F4F4F4;
+    }
+    .experience-item {
+      margin-bottom: 30px;
+    }
+    .experience-item h3 {
+      color: #BFA181;
+    }
+    .experience-item em {
+      color: #D4C5B0;
+      display: block;
+      margin-bottom: 10px;
+    }
+    #contact p {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    #contact a {
+      color: #BFA181;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    #contact a:hover {
+      color: #F4F4F4;
     }
     footer {
       text-align: center;
       padding: 20px;
       background: #000;
       color: #D4C5B0;
+      margin-top: 40px;
+    }
+    footer p {
+      margin-bottom: 10px;
     }
     footer a {
       color: #D4C5B0;
       text-decoration: none;
       margin: 0 10px;
+      transition: color 0.3s ease;
     }
     footer a:hover {
       color: #F4F4F4;
     }
+    .certification-item {
+      margin-bottom: 15px;
+      transition: color 0.3s ease;
+    }
+    .certification-item:hover {
+      color: green;
+    }
+    .certification-item a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    /* Responsive Tweaks */
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav div {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 10px;
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+      nav a {
+        font-size: 16px;
+        margin-left: 25px;
       }
       .hero-container {
-        padding: 20px;
+        flex-direction: row;
+        text-align: left;
+        padding: 40px;
+      }
+      .hero-image-container {
+        margin-right: 40px;
+        margin-bottom: 0;
+      }
+      .hero-text {
+        text-align: left;
       }
       .hero-text h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+      }
+      .hero-text p {
+        font-size: 1.1rem;
+      }
+      .hero-links {
+        justify-content: flex-start;
+      }
+      .img-label {
+        left: 10px;
+        bottom: 0;
+        transform: none;
+      }
+      section {
+        padding: 40px;
+      }
+      h2 {
+        font-size: 2rem;
+        text-align: left;
+      }
+      .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .hero-container img {
+        width: 250px;
+        height: 250px;
+      }
+      .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #000;
+        padding: 15px 0;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links a {
+        margin: 10px 20px;
+      }
+      .menu-toggle {
+        display: block;
       }
     }
   </style>
@@ -162,7 +409,8 @@
 <body>
   <nav>
     <div><a href="#hero">Home</a></div>
-    <div>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    <div class="nav-links">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -171,663 +419,276 @@
       <a href="#contact">Contact</a>
     </div>
   </nav>
-<style>
-  .hero-links a {
-    transition: transform 0.2s ease, color 0.2s ease;
-  }
-  .hero-links a:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
 
-  .hero-text h1 {
-    display: inline-block;
-    transition: transform 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-  }
-
-  .hero-text h1:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
-
-  .wave-emoji {
-    display: inline-block;
-    animation: wave 1.5s infinite;
-    transform-origin: 70% 70%;
-  }
-
-  @keyframes wave {
-    0% { transform: rotate(0deg); }
-    15% { transform: rotate(14deg); }
-    30% { transform: rotate(-8deg); }
-    45% { transform: rotate(14deg); }
-    60% { transform: rotate(-4deg); }
-    75% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-  .cta {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #BFA181;
-    color: #1C1C1C;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-  }
-
-  .cta:hover {
-    background-color: #D4C5B0;
-    color: #1C1C1C;
-    transform: scale(1.05);
-  }
-
-  .education-card {
-    background-color: #2A2A2A;
-    padding: 15px 20px;
-    border-left: 5px solid #BFA181;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .education-card:hover,
-  .about-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
-  }
-
-  #about:hover {
-    background-color: #1C1C1C;
-    transition: background-color 0.4s ease;
-  }
-
-  .hero-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .hero-container img {
-    width: 180px;
-    border-radius: 50%;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .hero-container img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(191, 161, 129, 0.7);
-  }
-
-  .img-label {
-    position: absolute;
-    left: 10px;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #F4F4F4;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .hero-container:hover .img-label {
-    opacity: 1;
-  }
-</style>
-
-<header id="hero">
-  <div class="hero-container">
-    <img src="owais.png" alt="Muhammad Owais">
-    <div class="img-label">Muhammad Owais</div>
-    <div class="hero-text">
-      <h1><span class="wave-emoji">👋</span> Hi, I am Muhammad Owais</h1>
-      <p>Front-End Developer, Aspiring Cybersecurity Engineer, Skilled in Responsive Design, Chrome Extensions, Product Design and Project Management</p>
-      <a href="#projects" class="cta">View My Projects</a>
-      <div class="hero-links" style="margin-top: 20px; display: flex; align-items: center; gap: 20px;">
-        <a href="https://www.linkedin.com/in/owaiskhubaisi/" target="_blank" style="color: #BFA181; text-decoration: none; font-weight: bold; display: flex; align-items: center;">
-          <img src="linkedin.png" alt="LinkedIn" style="width: 20px; height: 20px; margin-right: 8px;">LinkedIn
-        </a>
-        <a href="https://github.com/codemaestroowais" target="_blank" style="color: #BFA181; text-decoration: none; font-weight: bold; display: flex; align-items: center;">
-          <img src="Github.png" alt="GitHub" style="width: 20px; height: 20px; margin-right: 8px;">GitHub
-        </a>
-        <a href="https://drive.google.com/file/d/1xEw7fcUo2HVeQdS0tdGYSt23iPMiDCd9/view" target="_blank" style="color: #BFA181; text-decoration: none; font-weight: bold;">
-          📝 Resume
-        </a>
+  <header id="hero">
+    <div class="hero-container">
+      <div class="hero-image-container">
+        <img src="E:\POrtfolio\owais.png" alt="Muhammad Owais">
+        <div class="img-label">Muhammad Owais</div>
+      </div>
+      <div class="hero-text">
+        <h1><span class="wave-emoji">👋</span> Hi, I am Muhammad Owais</h1>
+        <p>Front-End Developer, Aspiring Cybersecurity Engineer, Skilled in Responsive Design, Chrome Extensions, Product Design and Project Management</p>
+        <a href="#projects" class="cta">View My Projects</a>
+        <div class="hero-links">
+          <a href="https://www.linkedin.com/in/owaiskhubaisi/" target="_blank">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/codemaestroowais" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://drive.google.com/file/d/1xEw7fcUo2HVeQdS0tdGYSt23iPMiDCd9/view" target="_blank">
+            <i class="fas fa-file-alt"></i> Resume
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<section id="about" style="padding: 40px;">
-  <h2>About Me</h2>
-  <div class="about-card education-card" style="background-color: #2A2A2A; padding: 20px 30px; border-left: 6px solid #BFA181; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-    <p>
-      I am a Computer Science student at UET Lahore with a strong passion for software development, AI, and cybersecurity. Outside of academics, I have built a variety of real-world projects including Chrome extensions, database management systems, AI-powered detection tools, IP banning mechanisms to prevent brute-force attacks, and a DSA learning platform.<br><br>
-      I specialize in front-end development and WordPress. Whether it is building fully responsive React applications or crafting elegant WordPress sites, I focus on making interfaces that are not just beautiful, but also easy to use and optimized for performance.<br><br>
-      My technical toolkit includes C++, C#, Python, JavaScript (React), and WordPress. I enjoy writing clean, maintainable code and building user-friendly designs that make a real impact. I have also explored building network utilities and browser extensions to push my boundaries.<br><br>
-      Currently, I am diving deeper into AI, front-end frameworks, and cybersecurity. I am eager to contribute to impactful projects and continue learning from real-world challenges and industry experts.
-    </p>
-  </div>
-
-  <h2 style="margin-top: 40px;">Education</h2>
-  <div class="education-card">
-    <h3>Bachelor of Science in Computer Science</h3>
-    <p>University of Engineering and Technology (UET), Lahore<br>
-    📍 Lahore, Pakistan<br>
-    Expected Graduation: 2027<br>
-    Current CGPA: 3.3</p>
-  </div>
-  <div class="education-card">
-    <h3>Intermediate – Pre-Engineering</h3>
-    <p>Muslim College of Science and Commerce, Multan<br>
-    📍 Multan Board<br>
-    Marks: 1011 / 1100<br>
-    Grade: A+</p>
-  </div>
-  <div class="education-card">
-    <h3>Matriculation – Science</h3>
-    <p>Brook Field School, Multan<br>
-    📍 Multan Board<br>
-    Marks: 1098 / 1100<br>
-    Grade: A+</p>
-  </div>
-</section>
-
-
-
-
-
-<style>
-  .hero-links a {
-    transition: transform 0.2s ease, color 0.2s ease;
-  }
-  .hero-links a:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
-
-  .hero-text h1 {
-    display: inline-block;
-    transition: transform 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-  }
-
-  .hero-text h1:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
-
-  .wave-emoji {
-    display: inline-block;
-    animation: wave 1.5s infinite;
-    transform-origin: 70% 70%;
-  }
-
-  @keyframes wave {
-    0% { transform: rotate(0deg); }
-    15% { transform: rotate(14deg); }
-    30% { transform: rotate(-8deg); }
-    45% { transform: rotate(14deg); }
-    60% { transform: rotate(-4deg); }
-    75% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-  .cta {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #BFA181;
-    color: #1C1C1C;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-  }
-
-  .cta:hover {
-    background-color: #D4C5B0;
-    color: #1C1C1C;
-    transform: scale(1.05);
-  }
-
-  .education-card {
-    background-color: #2A2A2A;
-    padding: 15px 20px;
-    border-left: 5px solid #BFA181;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .education-card:hover,
-  .about-card:hover,
-  .skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
-  }
-
-  #about:hover {
-    background-color: #1C1C1C;
-    transition: background-color 0.4s ease;
-  }
-
-  .hero-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .hero-container img {
-    width: 180px;
-    border-radius: 50%;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .hero-container img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(191, 161, 129, 0.7);
-  }
-
-  .img-label {
-    position: absolute;
-    left: 10px;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #F4F4F4;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .hero-container:hover .img-label {
-    opacity: 1;
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .skill-card {
-    background-color: #2A2A2A;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
-  }
-
-  .skill-card img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-  }
-
-  .skill-card span {
-    color: #F4F4F4;
-    font-weight: bold;
-    text-align: center;
-  }
-</style>
-
-<section id="skills" style="padding: 40px;">
-  <h2>Skills</h2>
-  <div class="skills-grid">
-    <div class="skill-card"><span>Microsoft Office Specialist</span></div>
-    <div class="skill-card"><span>LaTeX</span></div>
-    <div class="skill-card"><span>C++, C#, Python</span></div>
-    <div class="skill-card"><span>DBMS, SQL, MongoDB</span></div>
-    <div class="skill-card"><span>HTML, CSS, JavaScript (React)</span></div>
-    <div class="skill-card"><span>Web Development, WordPress</span></div>
-    <div class="skill-card"><span>Management System Development</span></div>
-    <div class="skill-card"><span>.NET Framework</span></div>
-    <div class="skill-card"><span>Responsive Web Design</span></div>
-    <div class="skill-card"><span>Product Design</span></div>
-    <div class="skill-card"><span>Project Management</span></div>
-    <div class="skill-card"><span>Mini Game Development</span></div>
-    <div class="skill-card"><span>SEO Expert</span></div>
-    <div class="skill-card"><span>Content & Blog Writing</span></div>
-    <div class="skill-card"><span>OOP, DSA</span></div>
-    <div class="skill-card"><span>AI & Machine Learning</span></div>
-  </div>
-</section>
-
-
-<style>
-  .hero-links a {
-    transition: transform 0.2s ease, color 0.2s ease;
-  }
-  .hero-links a:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
-
-  .hero-text h1 {
-    display: inline-block;
-    transition: transform 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-  }
-
-  .hero-text h1:hover {
-    transform: scale(1.05);
-    color: #F4F4F4;
-  }
-
-  .wave-emoji {
-    display: inline-block;
-    animation: wave 1.5s infinite;
-    transform-origin: 70% 70%;
-  }
-
-  @keyframes wave {
-    0% { transform: rotate(0deg); }
-    15% { transform: rotate(14deg); }
-    30% { transform: rotate(-8deg); }
-    45% { transform: rotate(14deg); }
-    60% { transform: rotate(-4deg); }
-    75% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
-  }
-
-  .cta {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #BFA181;
-    color: #1C1C1C;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-  }
-
-  .cta:hover {
-    background-color: #D4C5B0;
-    color: #1C1C1C;
-    transform: scale(1.05);
-  }
-
-  .education-card {
-    background-color: #2A2A2A;
-    padding: 15px 20px;
-    border-left: 5px solid #BFA181;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .education-card:hover,
-  .about-card:hover,
-  .skill-card:hover,
-  .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
-  }
-
-  #about:hover {
-    background-color: #1C1C1C;
-    transition: background-color 0.4s ease;
-  }
-
-  .hero-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .hero-container img {
-    width: 180px;
-    border-radius: 50%;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .hero-container img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(191, 161, 129, 0.7);
-  }
-
-  .img-label {
-    position: absolute;
-    left: 10px;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #F4F4F4;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .hero-container:hover .img-label {
-    opacity: 1;
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .skill-card {
-    background-color: #2A2A2A;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(191, 161, 129, 0.6);
-  }
-
-  .skill-card img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-  }
-
-  .skill-card span {
-    color: #F4F4F4;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 40px;
-  }
-
-  .project-card {
-    background-color: #2A2A2A;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .project-card h3 {
-    color: #BFA181;
-  }
-
-  .project-card a {
-    display: inline-block;
-    margin: 5px 10px 0 0;
-    color: #BFA181;
-    font-weight: bold;
-    text-decoration: none;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-
-  .project-card a:hover {
-    color: #F4F4F4;
-    transform: scale(1.05);
-  }
-</style>
-
-<section id="projects">
-  <h2>Projects</h2>
-  <div class="projects-grid">
-    <div class="project-card">
-      <h3>🎮 Road Rage Racing Car</h3>
-      <p>CLI-based C++ game. A simple and engaging car racing experience.</p>
-      <a href="https://github.com/codemaestroowais/Road-Rage-Racing-Car-Game-" target="_blank">GitHub</a>
-      <a href="https://youtu.be/z_j149lqSqM?si=10OlymkhKLcvPG1l" target="_blank">YouTube</a>
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="card about-card">
+      <p>
+        I am a Computer Science student at UET Lahore with a strong passion for software development, AI, and cybersecurity. Outside of academics, I have built a variety of real-world projects including Chrome extensions, database management systems, AI-powered detection tools, IP banning mechanisms to prevent brute-force attacks, and a DSA learning platform.<br><br>
+        I specialize in front-end development and WordPress. Whether it is building fully responsive React applications or crafting elegant WordPress sites, I focus on making interfaces that are not just beautiful, but also easy to use and optimized for performance.<br><br>
+        My technical toolkit includes C++, C#, Python, JavaScript (React), and WordPress. I enjoy writing clean, maintainable code and building user-friendly designs that make a real impact. I have also explored building network utilities and browser extensions to push my boundaries.<br><br>
+        Currently, I am diving deeper into AI, front-end frameworks, and cybersecurity. I am eager to contribute to impactful projects and continue learning from real-world challenges and industry experts.
+      </p>
     </div>
-    <div class="project-card">
-      <h3>📡 Medi Harmony CLI</h3>
-      <p>C++ based hospital Wi-Fi management system in CLI with DBMS support.</p>
-      <a href="https://github.com/codemaestroowais/Medi-Harmony-Hospital-Management-System-" target="_blank">GitHub</a>
-      <a href="https://youtu.be/28LeMUR4S8o?si=pikJJx19w1wotjh9" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>🗡️ Modern Ninja Game</h3>
-      <p>OOP-based GUI ninja game in C# with advanced interactions.</p>
-      <a href="https://github.com/codemaestroowais/Modern-Ninja-Game-in-GUI" target="_blank">GitHub</a>
-      <a href="https://youtu.be/QYsqPf2eBcA?si=T4_XEmlpykr2etyR" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>💻 Medi Harmony GUI</h3>
-      <p>Hospital management system in C# (WinForms) with full DBMS integration.</p>
-      <a href="https://github.com/codemaestroowais/Medi-Harmony-Hospital-Management-System-In-GUI" target="_blank">GitHub</a>
-      <a href="https://youtu.be/CTSoHAVTulg?si=vT_nHbMyHUjD0eBi" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>🔬 Lab Management System</h3>
-      <p>SQL-based database project for managing lab operations.</p>
-      <a href="https://github.com/codemaestroowais/Data-Base-Mid-Project" target="_blank">GitHub</a>
-      <a href="https://youtu.be/wXiXxln9IYE?si=LqI2XcaB7KFSJCsN" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>📊 DSA Scraping & Sorting</h3>
-      <p>Scraped data from AliBaba & eBay, implemented 8 sorting algorithms.</p>
-      <a href="https://github.com/codemaestroowais/DSA-Scrapping-and-Sorting-Project" target="_blank">GitHub</a>
-    </div>
-    <div class="project-card">
-      <h3>🌐 Hospital Networking Project</h3>
-      <p>Networking solution using VLANs for a hospital system.</p>
-      <a href="https://github.com/codemaestroowais/DSA-Scrapping-and-Sorting-Project" target="_blank">GitHub</a>
-      <a href="https://youtu.be/nrBzzk4mnX0?si=DXfdcYryMW6BzsLc" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>⌨️ Typing Speed Master</h3>
-      <p>Python-based app to test and improve typing speed.</p>
-      <a href="https://youtu.be/uUwo9krDlw4?si=Np-ToVZGuBRAoYF9" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>🃏 Solitaire Game</h3>
-      <p>GUI-based game using Klondike algorithm and DSA structures.</p>
-      <a href="https://github.com/codemaestroowais/DSA-Solitaire-Game-Project" target="_blank">GitHub</a>
-      <a href="https://youtu.be/FlLpKNnKSYo?si=cOkxI0F1p8zenGyn" target="_blank">YouTube</a>
-    </div>
-    <div class="project-card">
-      <h3>🎓 WOE Learning Platform</h3>
-      <p>Group project: DSA game-based learning with quizzes and puzzles.</p>
-      <a href="https://github.com/codemaestroowais/DSA-Final-Project-Mini-Play-Station" target="_blank">GitHub</a>
-    </div>
-    <div class="project-card">
-      <h3>🎹 Laser Piano</h3>
-      <p>Coal-based sensor piano. Featured on LinkedIn.</p>
-      <a href="https://www.linkedin.com/posts/owaiskhubaisi_laserpiano-techinnovation-studentproject-activity-7332470714693844993-8FV7" target="_blank">LinkedIn</a>
-    </div>
-    <div class="project-card">
-      <h3>📧 Fake Email/SMS Detection</h3>
-      <p>AI-powered phishing detection using NLP and ML models.</p>
-      <a href="https://github.com/codemaestroowais/Fake-SMS-Email-Detection" target="_blank">GitHub</a>
-    </div>
-    <div class="project-card">
-      <h3>🔖 YouTube Bookmark Extension</h3>
-      <p>Chrome extension for bookmarking videos with timestamps.</p>
-      <a href="https://github.com/codemaestroowais/You-tube-Bookmark-extension" target="_blank">GitHub</a>
-    </div>
-    <div class="project-card">
-      <h3>📻 FM Radio Project</h3>
-      <p>Electronics-based FM receiver project with demo.</p>
-      <a href="https://youtu.be/PBk_NE0MVJ0?si=rVaoiSPACExX5edH" target="_blank">YouTube</a>
-    </div>
-  </div>
-</section>
 
+    <h2>Education</h2>
+    <div class="card education-card">
+      <h3>Bachelor of Science in Computer Science</h3>
+      <p>University of Engineering and Technology (UET), Lahore<br>
+      📍 Lahore, Pakistan<br>
+      Expected Graduation: 2027<br>
+      Current CGPA: 3.3</p>
+    </div>
+    <div class="card education-card">
+      <h3>Intermediate – Pre-Engineering</h3>
+      <p>Muslim College of Science and Commerce, Multan<br>
+      📍 Multan Board<br>
+      Marks: 1011 / 1100<br>
+      Grade: A+</p>
+    </div>
+    <div class="card education-card">
+      <h3>Matriculation – Science</h3>
+      <p>Brook Field School, Multan<br>
+      📍 Multan Board<br>
+      Marks: 1098 / 1100<br>
+      Grade: A+</p>
+    </div>
+  </section>
 
-<section id="experience">
-  <h2>Experience</h2>
-  <div class="experience-item" style="transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-    <h3>SEO & Content Writing Intern — Expert Opinions Online</h3>
-    <p><em>Feb – June 2024</em></p>
-    <ul>
-      <li>Optimized product pages for <strong>Myrtlent.com</strong>, improving search engine visibility and user engagement</li>
-      <li>Performed keyword research, on-page SEO, and meta tag enhancements</li>
-      <li>Created SEO-friendly content and product descriptions aligned with marketing goals</li>
-    </ul>
-  </div>
-</section>
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">Microsoft Office Specialist</div>
+      <div class="skill-card">LaTeX</div>
+      <div class="skill-card">C++, C#, Python</div>
+      <div class="skill-card">DBMS, SQL, MongoDB</div>
+      <div class="skill-card">HTML, CSS, JavaScript (React)</div>
+      <div class="skill-card">Web Development, WordPress</div>
+      <div class="skill-card">Management System Development</div>
+      <div class="skill-card">.NET Framework</div>
+      <div class="skill-card">Responsive Web Design</div>
+      <div class="skill-card">Product Design</div>
+      <div class="skill-card">Project Management</div>
+      <div class="skill-card">Mini Game Development</div>
+      <div class="skill-card">SEO Expert</div>
+      <div class="skill-card">Content & Blog Writing</div>
+      <div class="skill-card">OOP, DSA</div>
+      <div class="skill-card">AI & Machine Learning</div>
+    </div>
+  </section>
 
-<section id="certifications">
-  <h2>Certifications & Achievements</h2>
-  <ul>
-    <li style="transition: color 0.3s ease;" onmouseover="this.style.color='green'" onmouseout="this.style.color=''" >
-      <a href="https://www.linkedin.com/posts/owaiskhubaisi_1000-free-courses-with-free-certificates-activity-7190783088031895552-txbw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
-        ✅ SQL Completion Certificate – LinkedIn
-      </a>
-    </li>
-    <li style="transition: color 0.3s ease;" onmouseover="this.style.color='green'" onmouseout="this.style.color=''" >
-      <a href="https://www.linkedin.com/posts/owaiskhubaisi_1000-free-courses-with-free-certificates-activity-7190782741997568007-H3va?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
-        ✅ MongoDB Certification – LinkedIn
-      </a>
-    </li>
-    <li style="transition: color 0.3s ease;" onmouseover="this.style.color='green'" onmouseout="this.style.color=''" >
-      <a href="https://www.linkedin.com/posts/owaiskhubaisi_codex2winner-techinnovation-uetlahorecompetitionwinner-activity-7145427521134649345-OEoA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
-        🏆 Runner-Up – CODEX 2.0 Tech Competition (UET Lahore)
-      </a>
-    </li>
-  </ul>
-</section>
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="card project-card">
+        <h3>🎮 Road Rage Racing Car</h3>
+        <p>CLI-based C++ game. A simple and engaging car racing experience.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Road-Rage-Racing-Car-Game-" target="_blank">GitHub</a>
+          <a href="https://youtu.be/z_j149lqSqM?si=10OlymkhKLcvPG1l" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>📡 Medi Harmony CLI</h3>
+        <p>C++ based hospital Wi-Fi management system in CLI with DBMS support.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Medi-Harmony-Hospital-Management-System-" target="_blank">GitHub</a>
+          <a href="https://youtu.be/28LeMUR4S8o?si=pikJJx19w1wotjh9" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🗡️ Modern Ninja Game</h3>
+        <p>OOP-based GUI ninja game in C# with advanced interactions.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Modern-Ninja-Game-in-GUI" target="_blank">GitHub</a>
+          <a href="https://youtu.be/QYsqPf2eBcA?si=T4_XEmlpykr2etyR" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>💻 Medi Harmony GUI</h3>
+        <p>Hospital management system in C# (WinForms) with full DBMS integration.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Medi-Harmony-Hospital-Management-System-In-GUI" target="_blank">GitHub</a>
+          <a href="https://youtu.be/CTSoHAVTulg?si=vT_nHbMyHUjD0eBi" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🔬 Lab Management System</h3>
+        <p>SQL-based database project for managing lab operations.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Data-Base-Mid-Project" target="_blank">GitHub</a>
+          <a href="https://youtu.be/wXiXxln9IYE?si=LqI2XcaB7KFSJCsN" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>📊 DSA Scraping & Sorting</h3>
+        <p>Scraped data from AliBaba & eBay, implemented 8 sorting algorithms.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/DSA-Scrapping-and-Sorting-Project" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🌐 Hospital Networking Project</h3>
+        <p>Networking solution using VLANs for a hospital system.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/DSA-Scrapping-and-Sorting-Project" target="_blank">GitHub</a>
+          <a href="https://youtu.be/nrBzzk4mnX0?si=DXfdcYryMW6BzsLc" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>⌨️ Typing Speed Master</h3>
+        <p>Python-based app to test and improve typing speed.</p>
+        <div class="project-links">
+          <a href="https://youtu.be/uUwo9krDlw4?si=Np-ToVZGuBRAoYF9" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🃏 Solitaire Game</h3>
+        <p>GUI-based game using Klondike algorithm and DSA structures.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/DSA-Solitaire-Game-Project" target="_blank">GitHub</a>
+          <a href="https://youtu.be/FlLpKNnKSYo?si=cOkxI0F1p8zenGyn" target="_blank">YouTube</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🎓 WOE Learning Platform</h3>
+        <p>Group project: DSA game-based learning with quizzes and puzzles.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/DSA-Final-Project-Mini-Play-Station" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🎹 Laser Piano</h3>
+        <p>Coal-based sensor piano. Featured on LinkedIn.</p>
+        <div class="project-links">
+          <a href="https://www.linkedin.com/posts/owaiskhubaisi_laserpiano-techinnovation-studentproject-activity-7332470714693844993-8FV7" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>📧 Fake Email/SMS Detection</h3>
+        <p>AI-powered phishing detection using NLP and ML models.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/Fake-SMS-Email-Detection" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>🔖 YouTube Bookmark Extension</h3>
+        <p>Chrome extension for bookmarking videos with timestamps.</p>
+        <div class="project-links">
+          <a href="https://github.com/codemaestroowais/You-tube-Bookmark-extension" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="card project-card">
+        <h3>📻 FM Radio Project</h3>
+        <p>Electronics-based FM receiver project with demo.</p>
+        <div class="project-links">
+          <a href="https://youtu.be/PBk_NE0MVJ0?si=rVaoiSPACExX5edH" target="_blank">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="card experience-item">
+      <h3>SEO & Content Writing Intern — Expert Opinions Online</h3>
+      <em>Feb – June 2024</em>
+      <ul>
+        <li>Optimized product pages for <strong>Myrtlent.com</strong>, improving search engine visibility and user engagement</li>
+        <li>Performed keyword research, on-page SEO, and meta tag enhancements</li>
+        <li>Created SEO-friendly content and product descriptions aligned with marketing goals</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <h2>Certifications & Achievements</h2>
+    <div class="card">
+      <ul>
+        <li class="certification-item">
+          <a href="https://www.linkedin.com/posts/owaiskhubaisi_1000-free-courses-with-free-certificates-activity-7190783088031895552-txbw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
+            ✅ SQL Completion Certificate – LinkedIn
+          </a>
+        </li>
+        <li class="certification-item">
+          <a href="https://www.linkedin.com/posts/owaiskhubaisi_1000-free-courses-with-free-certificates-activity-7190782741997568007-H3va?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
+            ✅ MongoDB Certification – LinkedIn
+          </a>
+        </li>
+        <li class="certification-item">
+          <a href="https://www.linkedin.com/posts/owaiskhubaisi_codex2winner-techinnovation-uetlahorecompetitionwinner-activity-7145427521134649345-OEoA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEZ-cmoB1-cXMyFosONJFsTtHLU_3-YS7s8" target="_blank">
+            🏆 Runner-Up – CODEX 2.0 Tech Competition (UET Lahore)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
   <section id="contact">
     <h2>Contact Me</h2>
-    <p>Email: <a href="mailto:ovas3853@gmail.com">ovas3853@gmail.com</a></p>
-    <p>Phone: 03091043809</p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/owaiskhubaisi/">Visit Profile</a></p>
+    <div class="card">
+      <p>Email: <a href="mailto:ovas3853@gmail.com">ovas3853@gmail.com</a></p>
+      <p>Phone: 03091043809</p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/owaiskhubaisi/" target="_blank">Visit Profile</a></p>
+    </div>
   </section>
 
   <footer>
     <p>&copy; 2025 Muhammad Owais | All rights reserved</p>
     <p>
-      <a href="https://github.com/codemaestroowais">GitHub</a> |
-      <a href="http://www.youtube.com/@teachtuneowais">YouTube</a> |
-      <a href="mailto:ovas3853@gmail.com">Email</a>
+      <a href="https://github.com/codemaestroowais" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+      <a href="http://www.youtube.com/@teachtuneowais" target="_blank"><i class="fab fa-youtube"></i> YouTube</a> |
+      <a href="mailto:ovas3853@gmail.com"><i class="fas fa-envelope"></i> Email</a>
     </p>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+      });
+    });
+
+    // Smooth scrolling for all links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 </html>
